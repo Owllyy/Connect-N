@@ -204,6 +204,7 @@ int evaluate_board(node *arg)
         j = 0;
         while (j < height)
         {
+            printf("j = %d, i = %d\n", j, i);
             if (arg->board[i][j] == 0)
                 j++;
             if (arg->board[i][j] == 1)

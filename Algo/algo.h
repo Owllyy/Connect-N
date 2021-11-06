@@ -28,7 +28,7 @@ node *current_move;
 node    *creat_board();
 void    init_node(node *new);
 node    *copy_node(node *old, int move);
-void    free_node(node *to_free);
+void    free_node(node *new);
 node    **new_child(node *old);
 
 
