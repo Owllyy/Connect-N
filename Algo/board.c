@@ -6,9 +6,10 @@ node *creat_board()
     node *new = malloc(sizeof(node));
     new->board = malloc(sizeof(char *) * width);
     new->end = 0;
-    new->next = malloc(sizeof(node *) * width);;
+    new->next = 0;
     new->father = 0;
     new->player = 0;
+	new->score = 0;
     new->move_to_play = -1;
     while(i < width)
     {
@@ -21,6 +22,8 @@ node *creat_board()
 node *first_node(int move)
 {
     node *new = creat_board();
+	init_node(new);
+	new->board[width / 2][0] = 1;
     if (move != -1)
     {
         new->board[move][0] = 2;
@@ -74,11 +77,11 @@ void    play_move(node *new, int move, int player)
         else
             new->board[move][i] = 2;
     }
-    else
-    {
-        new->father->next[move] = 0;
-        free_node(new);
-    }
+    // else
+    // {
+    //     new->father->next[move] = 0;
+    //     free_node(new);
+    // }
 }
 
 node    *copy_node(node *old, int move)
@@ -98,7 +101,8 @@ node    *copy_node(node *old, int move)
     }
     new->move_to_play = move;
     new->father = old;
-    old->next[i] = new;
+	if (old->next)
+    	old->next[i] = new;
     return (new);
 }
 
@@ -109,7 +113,7 @@ node **new_child(node *old)
     while (i < width)
     {
         new[i] = copy_node(old, i);
-        if (new[i]->player)
+        if (old->player)
             new[i]->player = 0;
         else
             new[i]->player = 1;

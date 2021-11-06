@@ -7,7 +7,7 @@ SRCS        =       ab_prune.c \
 					
 OBJS        =       ${SRCS:.c=.o}
 
-CFLAGS      =       -Wall -Wextra -Werror -O3 -g3 -fsanitize=address
+CFLAGS      =       -Wall -Wextra -Werror -O3 -g3 -lm -fsanitize=address
 
 CC			=		gcc
 
