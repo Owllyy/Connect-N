@@ -1,4 +1,4 @@
-NAME        =       connect-n
+NAME        =       player
 
 SRCS        =       ab_heuristic.c \
 					main.c
