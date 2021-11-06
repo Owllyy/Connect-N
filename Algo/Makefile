@@ -9,7 +9,7 @@ CFLAGS      =       -Wall -Wextra -Werror -O3 -g3
 
 CC			=		gcc
 
-DEP			=		Philo.h
+DEP			=		algo.h
 
 %.o:%.c $(DEP)
 		$(CC) ${CFLAGS} -c $< -o $@

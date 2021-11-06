@@ -30,7 +30,22 @@ void    init_node(node *new)
     }
 }
 
-void    copy_node(node *old)
+void    play_move(node *new, int move, int player)
+{
+    int i = 0;
+
+    while (i < height && new->board[move][i])
+        i++;
+    if (i < height)
+    {
+        if (player)
+            new->board[move][i] = 1;
+        else
+            new->board[move][i] = 2;
+    }
+}
+
+node    *copy_node(node *old, int move, int player)
 {
     int i = 0;
     int j;
@@ -45,6 +60,8 @@ void    copy_node(node *old)
         }
         i++;
     }
+    play_move(new, move, player);
+    return (new);
 }
 
 void    free_node(node *to_free)
