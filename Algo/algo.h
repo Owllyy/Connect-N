@@ -23,4 +23,6 @@ void    init_node(node *new);
 void    copy_node(node *old);
 void    free_node(node *to_free);
 
+int evaluate_board(node *arg);
+
 #endif CONNECT_N_H
