@@ -3,4 +3,6 @@
 int main()
 {
     printf("ok");
+    while (1)
+        ;
 }

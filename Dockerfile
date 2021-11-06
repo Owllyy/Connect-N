@@ -14,12 +14,12 @@ RUN apt update && apt install -y make build-essential
 
 ### Mandatory
 #
-WORKDIR /build
-#
 COPY . .
+#
+WORKDIR /Algo
 #############
 
-RUN make -C /Connect-N/Algo
+# RUN make re
 
 #######################################################
 ### Runner stage
@@ -29,13 +29,14 @@ FROM debian:10-slim
 
 ### Mandatory
 #
-WORKDIR /app
+WORKDIR /Algo
 #
-RUN adduser player && chown -R player /app
+RUN adduser player && chown -R player /Algo
 #
 USER player
 #############
 
-COPY --from=builder /build/* /app/player
+COPY --from=builder /Test /Test
+#COPY --from=builder SRC DEST(dans container)
 
-CMD ./player
+CMD sleep infinity

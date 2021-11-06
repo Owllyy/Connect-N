@@ -10,13 +10,14 @@ int    build_tree(node *old, int depth, int alpha, int beta, int max_player)
         old->score = evaluate_board(old);
         return (old->score);
     }
-
+    node **new = new_child(old);
     if (max_player)
     {
         value = INT_MIN;
         for (int i = 0; i < width; i++)
         {
-            if (save = build_tree(copy_node(old, i, 1), depth - 1, alpha, beta, 0) > value)
+            new[i]->player = 0;
+            if ((save = build_tree(new[i], depth - 1, alpha, beta, 0)) > value)
                 value = save;
             if (value > beta)
                 break ;
@@ -31,7 +32,8 @@ int    build_tree(node *old, int depth, int alpha, int beta, int max_player)
         value = INT_MAX;
         for (int i = 0; i < width; i++)
         {
-            if (save = build_tree(copy_node(old, i, 0), depth - 1, alpha, beta, 1) > value)
+            new[i]->player = 1;
+            if ((save = build_tree(new[i], depth - 1, alpha, beta, 1)) > value)
                 value = save;
             if (value < alpha)
                 break ;

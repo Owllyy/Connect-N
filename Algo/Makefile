@@ -1,7 +1,9 @@
 NAME        =       player
 
-SRCS        =       ab_heuristic.c \
-					main.c
+SRCS        =       ab_prune.c \
+					main.c \
+					board.c \
+					evaluation.c \
 					
 OBJS        =       ${SRCS:.c=.o}
 
