@@ -10,6 +10,7 @@
 int width;
 int height;
 char move_to_win;
+int move;
 
 typedef struct s_node
 {
