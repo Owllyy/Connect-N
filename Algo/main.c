@@ -97,7 +97,7 @@ int	execute(t_file *file, t_board *board, char *file_path, int fd)
 	while (1)
 	{
 		fscanf(stdin, "%i", &opponent_move);
-		fflush(stdin);
+		// fflush(stdin);
 		// opponent_move = atoi(file->line);
 		board->time_given = get_time(board);
 		// nb_nodd = limit_reflexion(board, nb_nodd);

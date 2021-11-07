@@ -15,7 +15,7 @@ unsigned int timer(void)
 		current_move = first_node(opponent_move);
 		if (opponent_move != -1)
 		{
-			build_tree(current_move, 1, INT_MIN, INT_MAX, 7);
+			build_tree(current_move, 5, INT_MIN, INT_MAX, 7);
 			choose_play();
 		}
 		// else
@@ -26,12 +26,12 @@ unsigned int timer(void)
 	{
 		// printf("OPO = %d\n", opponent_move);
 		opo_move(opponent_move);
-		build_tree(current_move, 1, INT_MIN, INT_MAX, 7);
+		build_tree(current_move, 5, INT_MIN, INT_MAX, 7);
 		choose_play();
-		printf("%d\n", our_play);
-		fflush(stdout);
-		// debug_print_node(current_move);
 	}
+	debug_print_node(current_move);
+	// printf("%d\n", our_play);
+	// fflush(stdout);
 
   	gettimeofday(&end, NULL);
 

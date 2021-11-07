@@ -75,7 +75,7 @@ int diag_down_r(int player, char **board, int x, int y)
     {
         while (i < width && j >= 0 && count < move_to_win)
         {
-            if (board[i][j] && board[i][j] != player)
+            if (board[i][j] && board[i][j] != player && board[i][j] != 0)
             {
                 count = 0;
                 break ;
@@ -101,7 +101,7 @@ int diag_down_l(int player, char **board, int x, int y)
     {
         while (i >= 0 && j >= 0 && count < move_to_win)
         {
-            if (board[i][j] && board[i][j] != player)
+            if (board[i][j] && board[i][j] != player && board[i][j] != 0)
             {
                 count = 0;
                 break ;
@@ -202,7 +202,7 @@ int line_left(int player, char **board, int x, int y)
     {
         while (i >= 0 && count < move_to_win)
         {
-            if (board[i][j] && board[i][j] != player)
+            if (board[i][j] && board[i][j] != player && board[i][j] != 0)
             {
                 count = 0;
                 break ;
@@ -226,11 +226,11 @@ int find_line(int player, char **board, int x, int y)
     if (ret == -1)
         return (-1);
     score += ft_pow(10, ret);
-    ret = line_left(player, board, x, y);
+    ret = line_right(player, board, x, y);
     if (ret == -1)
         return (-1);
     score += ft_pow(10, ret);
-    ret = line_right(player, board, x, y);
+    ret = line_left(player, board, x, y);
     if (ret == -1)
         return (-1);
     score += ft_pow(10, ret);
