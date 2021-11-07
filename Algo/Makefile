@@ -4,8 +4,6 @@ SRCS        =       ab_prune.c \
 					main.c \
 					board.c \
 					evaluation.c \
-					node_count.c \
-					open_close.c \
 					parse.c \
 					timer.c
 					

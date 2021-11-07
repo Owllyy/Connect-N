@@ -70,16 +70,9 @@ void    update_tree();
 #  define BUFFER_SIZE	100
 # endif
 
-
-int					open_file(t_file *file);
-int					close_file(t_file *file);
 void				ft_init(t_board *board);
 int					parse_params(t_file *file, t_board *board);
 void				ft_err_putstr(char *str);
-unsigned int		get_time(t_board *board);
-int					get_next_line(int fd, char **line);
-int					limit_reflexion(t_board *board, int nb_nodd);
-unsigned int		ft_atoi(const char *str);
-unsigned int 		timer(void);
+void		 		timer(void);
 
 #endif

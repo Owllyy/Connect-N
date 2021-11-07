@@ -8,7 +8,7 @@
 #######################################################
 ### Builder stage
 
-FROM gcc:latest as builder
+FROM debian:10 as builder
 
 RUN apt update && apt install -y make build-essential
 
@@ -24,7 +24,7 @@ RUN make re
 #######################################################
 ### Runner stage
 
-FROM gcc:latest
+FROM debian:10
 
 ### Mandatory
 #

@@ -69,38 +69,17 @@ void    choose_play()
     recursiv_free(save);
 }
 
-void	ft_err_putstr(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		write(2, &str[i], 1);
-		i++;
-	}
-}
 
 int	execute(t_file *file, t_board *board, char *file_path, int fd)
 {
-	// int nb_nodd;
-	
-	// nb_nodd = 1;
 	file->file_path = file_path;
 	file->fd = fd;
 	ft_init(board);
-	if (!parse_params(file, board))
-	{
-		ft_err_putstr("Params are incorrect\n");
-		return (0);
-	}
+	parse_params(file, board);
 	while (1)
 	{
 		fscanf(stdin, "%i", &opponent_move);
-		// fflush(stdin);
-		// opponent_move = atoi(file->line);
-		board->time_given = get_time(board);
-		// nb_nodd = limit_reflexion(board, nb_nodd);
+		timer();
 	}
 	return (1);
 }
@@ -116,7 +95,5 @@ int	main(int argc, char **argv)
 		execute(&file, &board, 0, 0);
 		return (0);
 	}
-	else
-		ft_err_putstr("ERROR");
 	return (0);
 }
