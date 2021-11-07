@@ -28,7 +28,9 @@ node *first_node(int move)
     else
     {
 	    new->board[width / 2][0] = 1;
+        our_play = width / 2;
         new->player = 1;
+        new->score = INT_MAX;
     }
     return (new);
 }
@@ -113,7 +115,7 @@ node **new_child(node *old)
         else
             new[i]->player = 1;
         if (!play_move(new[i], i, new[i]->player))
-            old->next[i] = 0;
+            new[i] = 0;
         i++;
     }
     return (new);

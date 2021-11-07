@@ -4,10 +4,14 @@ SRCS        =       ab_prune.c \
 					main.c \
 					board.c \
 					evaluation.c \
+					node_count.c \
+					open_close.c \
+					parse.c \
+					timer.c
 					
 OBJS        =       ${SRCS:.c=.o}
 
-CFLAGS      =       -Wall -Wextra -Werror -Ofast -g3 -fsanitize=address -march=native
+CFLAGS      =       -Ofast -g3 -march=native
 
 CC			=		gcc
 

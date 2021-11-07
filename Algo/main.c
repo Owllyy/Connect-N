@@ -1,9 +1,9 @@
 #include "algo.h"
 
-int width = 7;
-int height = 6;
-char move_to_win = 4;
-int opponent_move = 3;
+int width = 0;
+int height = 0;
+char move_to_win = 0;
+int opponent_move = -1;
 node *current_move = 0;
 
 void	debug_print_node(node *x)
@@ -34,6 +34,23 @@ void    recursiv_free(node *save)
     }
 }
 
+void    opo_move(int move)
+{
+    current_move->player = 0;
+    current_move->score = INT_MIN;
+    current_move->next = 0;
+	int i = 0;
+    while (i < height)
+    {
+        if (!current_move->board[move][i])
+        {
+            current_move->board[move][i] = 2;
+            return ;
+        }
+		i++;
+    }
+}
+
 void    choose_play()
 {
     int i = 0;
@@ -41,25 +58,65 @@ void    choose_play()
     node *save = current_move;
     for (int j = 0; j < width; j++)
     {
-        // debug_print_node(current_move->next[j]);
-        if (current_move->next[j]->score > saver)
+        if (current_move->next[j] && current_move->next[j]->score > saver)
         {
             i = j;
             saver = current_move->next[j]->score;
         }
     }
     current_move = current_move->next[i];
+	our_play = i;
     recursiv_free(save);
 }
 
-int main()
+void	ft_err_putstr(char *str)
 {
-    node *x;
+	int	i;
 
-	x = first_node(3);
-    current_move = x;
-	build_tree(current_move, 10, INT_MIN, INT_MAX, 1);
-    choose_play();
-    debug_print_node(current_move);
-};
+	i = 0;
+	while (str[i])
+	{
+		write(2, &str[i], 1);
+		i++;
+	}
+}
 
+int	execute(t_file *file, t_board *board, char *file_path, int fd)
+{
+	// int nb_nodd;
+	
+	// nb_nodd = 1;
+	file->file_path = file_path;
+	file->fd = fd;
+	ft_init(board);
+	if (!parse_params(file, board))
+	{
+		ft_err_putstr("Params are incorrect\n");
+		return (0);
+	}
+	while (1)
+	{
+		fscanf(stdin, "%i", &opponent_move);
+		fflush(stdin);
+		// opponent_move = atoi(file->line);
+		board->time_given = get_time(board);
+		// nb_nodd = limit_reflexion(board, nb_nodd);
+	}
+	return (1);
+}
+
+int	main(int argc, char **argv)
+{
+	t_file	file;
+	t_board	board;
+
+    (void)argv;
+	if (argc == 1)
+	{
+		execute(&file, &board, 0, 0);
+		return (0);
+	}
+	else
+		ft_err_putstr("ERROR");
+	return (0);
+}

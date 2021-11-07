@@ -8,7 +8,7 @@
 #######################################################
 ### Builder stage
 
-FROM debian:10 as builder
+FROM gcc:latest as builder
 
 RUN apt update && apt install -y make build-essential
 
@@ -19,13 +19,12 @@ COPY . .
 WORKDIR /Algo
 #############
 
-# RUN make re
+RUN make re
 
 #######################################################
 ### Runner stage
 
-FROM debian:10-slim
-
+FROM gcc:latest
 
 ### Mandatory
 #
@@ -36,7 +35,7 @@ RUN adduser player && chown -R player /Algo
 USER player
 #############
 
-COPY --from=builder /Test /Test
+COPY --from=builder /Algo/player /Algo/player
 #COPY --from=builder SRC DEST(dans container)
 
-CMD sleep infinity
+CMD ./player

@@ -1,5 +1,18 @@
 #include "algo.h"
 
+int ft_pow(int value, int pow)
+{
+    int i = 0;
+    int test = value;
+    int ret = value;
+    while (i < pow)
+    {
+        ret *= test;
+        i++;
+    }
+    return (ret);
+}
+
 int diag_up_r(int player, char **board, int x, int y)
 {
     int i = x;
@@ -112,19 +125,19 @@ int find_diag(int player, char **board, int x, int y)
     ret = diag_up_r(player, board, x, y);
     if (ret == -1)
         return (-1);
-    score += pow(10, ret);
+    score += ft_pow(10, ret);
     ret = diag_up_l(player, board, x, y);
     if (ret == -1)
         return (-1);
-    score += pow(10, ret);
+    score += ft_pow(10, ret);
     ret = diag_down_r(player, board, x, y);
     if (ret == -1)
         return (-1);
-    score += pow(10, ret);
+    score += ft_pow(10, ret);
     ret = diag_down_l(player, board, x, y);
     if (ret == -1)
         return (-1);
-    score += pow(10, ret);
+    score += ft_pow(10, ret);
 
     return (score);
 }
@@ -212,15 +225,15 @@ int find_line(int player, char **board, int x, int y)
     ret = line_up(player, board, x, y);
     if (ret == -1)
         return (-1);
-    score += pow(10, ret);
+    score += ft_pow(10, ret);
     ret = line_left(player, board, x, y);
     if (ret == -1)
         return (-1);
-    score += pow(10, ret);
+    score += ft_pow(10, ret);
     ret = line_right(player, board, x, y);
     if (ret == -1)
         return (-1);
-    score += pow(10, ret);
+    score += ft_pow(10, ret);
 
     return (score);
 }
@@ -267,9 +280,9 @@ int evaluate_board(node *arg)
             j++;
         }
         if (ret == -1 && arg->player)
-            return (INT_MAX);
-        if (ret == -1)
             return (INT_MIN);
+        if (ret == -1)
+            return (INT_MAX);
         i++;
     }
     return (eval);
