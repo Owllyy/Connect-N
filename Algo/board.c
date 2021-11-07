@@ -79,7 +79,7 @@ int    play_move(node *new, int move, int player)
             new->board[move][i] = 2;
         return (1);
     }
-    free_node(new);
+    // free_node(new);
     return (0);
 }
 

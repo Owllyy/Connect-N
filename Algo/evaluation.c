@@ -270,19 +270,19 @@ int evaluate_board(node *arg)
             if (arg->board[i][j] == 1)
             {
                 ret = score_pawn(1, arg->board, i, j);
+                if (ret == -1)
+                    return (INT_MAX);
                 eval += ret;
             }
             if (arg->board[i][j] == 2)
             {
                 ret = score_pawn(2, arg->board, i, j);
+                if (ret == -1)
+                    return (INT_MIN);
                 eval -= ret;
             }
             j++;
         }
-        if (ret == -1 && arg->player)
-            return (INT_MIN);
-        if (ret == -1)
-            return (INT_MAX);
         i++;
     }
     return (eval);
