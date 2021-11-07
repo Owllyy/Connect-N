@@ -8,8 +8,6 @@ int    build_tree(node *old, int depth, int alpha, int beta, int max_player)
     if (!depth || old->end)
     {
         old->score = evaluate_board(old);
-		if (!best_end || best_end->score < old->score)
-			best_end = old;
         return (old->score);
     }
     node **new = new_child(old);

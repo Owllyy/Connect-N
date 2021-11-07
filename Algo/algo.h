@@ -10,6 +10,7 @@
 extern int width;
 extern int height;
 extern char move_to_win;
+extern int opponent_move;
 
 typedef struct s_node
 {

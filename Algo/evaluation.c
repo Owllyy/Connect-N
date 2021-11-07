@@ -20,6 +20,8 @@ int diag_up_r(int player, char **board, int x, int y)
             i++;
             j++;
         }
+        if (count == move_to_win)
+            return (-1);
     }
     return (count);
 }
@@ -44,6 +46,8 @@ int diag_up_l(int player, char **board, int x, int y)
             i--;
             j++;
         }
+        if (count == move_to_win)
+            return (-1);
     }
     return (count);
 }
@@ -68,6 +72,8 @@ int diag_down_r(int player, char **board, int x, int y)
             i++;
             j--;
         }
+        if (count == move_to_win)
+            return (-1);
     }
     return (count);
 }
@@ -92,6 +98,8 @@ int diag_down_l(int player, char **board, int x, int y)
             i--;
             j--;
         }
+        if (count == move_to_win)
+            return (-1);
     }
     return (count);
 }
@@ -99,11 +107,24 @@ int diag_down_l(int player, char **board, int x, int y)
 int find_diag(int player, char **board, int x, int y)
 {
     int score = 0;
+    int ret = 0;
 
-    score += pow(10, diag_up_r(player, board, x, y));
-    score += pow(10, diag_up_l(player, board, x, y));
-    score += pow(10, diag_down_r(player, board, x, y));
-    score += pow(10, diag_down_l(player, board, x, y));
+    ret = diag_up_r(player, board, x, y);
+    if (ret == -1)
+        return (-1);
+    score += pow(10, ret);
+    ret = diag_up_l(player, board, x, y);
+    if (ret == -1)
+        return (-1);
+    score += pow(10, ret);
+    ret = diag_down_r(player, board, x, y);
+    if (ret == -1)
+        return (-1);
+    score += pow(10, ret);
+    ret = diag_down_l(player, board, x, y);
+    if (ret == -1)
+        return (-1);
+    score += pow(10, ret);
 
     return (score);
 }
@@ -127,6 +148,8 @@ int line_up(int player, char **board, int x, int y)
                 count++;
             j++;
         }
+        if (count == move_to_win)
+            return (-1);
     }
     return (count);
 }
@@ -150,6 +173,8 @@ int line_right(int player, char **board, int x, int y)
                 count++;
             i++;
         }
+        if (count == move_to_win)
+            return (-1);
     }
     return (count);
 }
@@ -173,6 +198,8 @@ int line_left(int player, char **board, int x, int y)
                 count++;
             i--;
         }
+        if (count == move_to_win)
+            return (-1);
     }
     return (count);
 }
@@ -180,17 +207,37 @@ int line_left(int player, char **board, int x, int y)
 int find_line(int player, char **board, int x, int y)
 {
     int score = 0;
+    int ret = 0;
 
-    score += pow(10, line_up(player, board, x, y));
-    score += pow(10, line_left(player, board, x, y));
-    score += pow(10, line_right(player, board, x, y));
+    ret = line_up(player, board, x, y);
+    if (ret == -1)
+        return (-1);
+    score += pow(10, ret);
+    ret = line_left(player, board, x, y);
+    if (ret == -1)
+        return (-1);
+    score += pow(10, ret);
+    ret = line_right(player, board, x, y);
+    if (ret == -1)
+        return (-1);
+    score += pow(10, ret);
 
     return (score);
 }
 
 int score_pawn(int player, char **board, int x, int y)
 {
-    return (find_diag(player, board, x, y) + find_line(player, board, x, y));
+    int score = 0;
+    int ret = 0;
+    ret = find_line(player, board, x, y);
+    if (ret == -1 && player)
+        return (-1);
+    score += ret;
+    ret = find_diag(player, board, x, y);
+    if (ret == -1 && player)
+        return (-1);
+    score += ret;
+    return (score);
 }
 
 int evaluate_board(node *arg)
@@ -198,20 +245,30 @@ int evaluate_board(node *arg)
     int i = 0;
     int j;
     int eval = 0;
-
+    int ret = 0;
     while (i < width)
     {
         j = 0;
-        while (j < height)
+        while (j < height && ret != -1)
         {
             if (arg->board[i][j] == 0)
                 j++;
             if (arg->board[i][j] == 1)
-                eval += score_pawn(1, arg->board, i, j);
+            {
+                ret = score_pawn(1, arg->board, i, j);
+                eval += ret;
+            }
             if (arg->board[i][j] == 2)
-                eval -= score_pawn(2, arg->board, i, j);
+            {
+                ret = score_pawn(2, arg->board, i, j);
+                eval -= ret;
+            }
             j++;
         }
+        if (ret == -1 && arg->player)
+            return (INT_MAX);
+        if (ret == -1)
+            return (INT_MIN);
         i++;
     }
     return (eval);
