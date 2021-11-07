@@ -4,7 +4,6 @@ int width = 7;
 int height = 6;
 char move_to_win = 4;
 int opponent_move = 3;
-node *best_end = 0;
 node *current_move = 0;
 
 void	debug_print_node(node *x)
@@ -18,8 +17,8 @@ void	debug_print_node(node *x)
 		printf("\n");
 	}
 	printf("\n");
-	printf("plyr = %d, mve = %d, score = %d, end = %d, next = %p, father = %p\n"
-	, x->player, x->move_to_play, x->score, x->end, x->next, x->father);
+	printf("plyr = %d, score = %d, next = %p,\n"
+	, x->player, x->score, x->next);
 }
 
 void    recursiv_free(node *save)
@@ -35,29 +34,21 @@ void    recursiv_free(node *save)
     }
 }
 
-void    change_current()
-{
-    node *save = current_move;
-    current_move = current_move->next[opponent_move];
-    current_move->father = 0;
-    recursiv_free(save);
-}
-
 void    choose_play()
 {
     int i = 0;
-    int saver = 0;
+    int saver = INT_MIN;
     node *save = current_move;
     for (int j = 0; j < width; j++)
     {
-        if (save->next[i]->score > saver)
+        // debug_print_node(current_move->next[j]);
+        if (current_move->next[j]->score > saver)
         {
             i = j;
-            saver = save->score;
+            saver = current_move->next[j]->score;
         }
     }
     current_move = current_move->next[i];
-    current_move->father = 0;
     recursiv_free(save);
 }
 
@@ -65,26 +56,10 @@ int main()
 {
     node *x;
 
-	x = first_node(-1);
+	x = first_node(3);
     current_move = x;
-	debug_print_node(current_move);
-	build_tree(current_move, 3, INT_MIN, INT_MAX, 0);
-    change_current();
-	debug_print_node(current_move);
-    build_tree(current_move, 3, INT_MIN, INT_MAX, 1);
-    change_current();
-	debug_print_node(current_move);
-    build_tree(current_move, 3, INT_MIN, INT_MAX, 0);
-    change_current();
-	debug_print_node(current_move);
-    build_tree(current_move, 3, INT_MIN, INT_MAX, 1);
-    change_current();
-	debug_print_node(current_move);
-	free_node(x);
-    // printf("%d\n", evaluate_board(best_end));
+	build_tree(current_move, 10, INT_MIN, INT_MAX, 1);
+    choose_play();
+    debug_print_node(current_move);
 };
 
-//change current;
-//search from best_outcome;
-//update node;
-//free_node;

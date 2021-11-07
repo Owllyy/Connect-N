@@ -4,8 +4,8 @@ int    build_tree(node *old, int depth, int alpha, int beta, int max_player)
 {
     int value;
     int save;
-
-    if (!depth || old->end)
+    
+    if (!depth)
     {
         old->score = evaluate_board(old);
         return (old->score);
@@ -17,7 +17,6 @@ int    build_tree(node *old, int depth, int alpha, int beta, int max_player)
         value = INT_MIN;
         for (int i = 0; i < width; i++)
         {
-            old->next[i]->player = 0;
             if ((save = build_tree(new[i], depth - 1, alpha, beta, 0)) > value)
                 value = save;
             if (value > beta)
@@ -25,7 +24,8 @@ int    build_tree(node *old, int depth, int alpha, int beta, int max_player)
             if (alpha < value)
                 alpha = value;
         }
-        old->score = value;
+        if (old->score < value)
+            old->score = value;
         return (value);
     }
     else
@@ -33,15 +33,15 @@ int    build_tree(node *old, int depth, int alpha, int beta, int max_player)
         value = INT_MAX;
         for (int i = 0; i < width; i++)
         {
-            new[i]->player = 1;
-            if ((save = build_tree(new[i], depth - 1, alpha, beta, 1)) > value)
+            if ((save = build_tree(new[i], depth - 1, alpha, beta, 1)) < value)
                 value = save;
             if (value < alpha)
                 break ;
             if (beta > value)
                 beta = value;
         }
-        old->score = value;
+        if (old->score < value)
+            old->score = value;
         return (value);
     }
 }

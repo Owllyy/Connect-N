@@ -246,6 +246,7 @@ int evaluate_board(node *arg)
     int j;
     int eval = 0;
     int ret = 0;
+
     while (i < width)
     {
         j = 0;
